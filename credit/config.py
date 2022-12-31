@@ -11,3 +11,5 @@ class EnvironmentVariables:
 
 env_var = EnvironmentVariables()
 mongo_client = pymongo.MongoClient(env_var.mongo_db_url)
+
+TARGET_COLUMN = "default.payment.next.month"
