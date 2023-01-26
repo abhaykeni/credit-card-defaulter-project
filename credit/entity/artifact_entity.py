@@ -8,8 +8,13 @@ class DataIngestionArtifact:
 
 @dataclass    
 class DataValidationArtifact:...
+
 @dataclass
-class DataTransformationArtifact:...
+class DataTransformationArtifact:
+    transform_object_path:str
+    transform_train_path:str
+    transform_test_path:str
+    
 @dataclass
 class ModelTrainerArtifact:...
 @dataclass

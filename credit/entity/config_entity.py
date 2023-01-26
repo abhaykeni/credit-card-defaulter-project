@@ -6,6 +6,8 @@ from credit.exception import CreditException
 FEATURE_FILE_NAME = "credit.csv"
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
+TRANSFORMER_FILE_NAME = "transformer.pkl"
+MODEL_FILE_NAME = "model.pkl"  
 
 
 class TrainingPipelineConfig:
@@ -28,8 +30,24 @@ class DataIngestionConfig:
     except Exception as e:
         raise CreditException(e,sys)
 
-class DataValidationConfig:...
-class DataTransformationConfig:...
+class DataValidationConfig:
+    try:
+        def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+            pass
+    except Exception as e:
+        raise CreditException(e,sys)
+
+class DataTransformationConfig:
+    try:
+        def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+            self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir,"data_transformation")
+            self.transform_object_path = os.path.join(self.data_transformation_dir,"transformer",TRANSFORMER_FILE_NAME)
+            self.transformed_train_path = os.path.join(self.data_transformation_dir,"transformed",TRAIN_FILE_NAME.replace(old="csv", new="npz"))
+            self.transformed_test_path = os.path.join(self.data_transformation_dir,"transformed",TEST_FILE_NAME.replace(old="csv", new="npz"))
+    except Exception as e:
+        raise CreditException(e,sys)
+
+
 class ModelTrainerConfig:...
 class ModelEvaluationConfig:...
 class ModelPusherConfig:...
