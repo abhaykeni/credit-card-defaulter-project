@@ -12,11 +12,15 @@ class DataValidationArtifact:...
 @dataclass
 class DataTransformationArtifact:
     transform_object_path:str
-    transform_train_path:str
-    transform_test_path:str
+    transformed_train_path:str
+    transformed_test_path:str
     
 @dataclass
-class ModelTrainerArtifact:...
+class ModelTrainerArtifact:
+    model_path:str
+    f1_test_score:float
+    f1_test_score:float
+    
 @dataclass
 class ModelEvaluationArtifact:...
 @dataclass

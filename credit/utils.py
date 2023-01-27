@@ -19,7 +19,7 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
     except Exception as e:
         raise CreditException(e,sys)
 
-def save_numpy_array_data(file_path:str,array:np.arr):
+def save_numpy_array_data(file_path:str,array:np.array):
     try:
         dir_path = os.path.dirname(p=file_path)
         os.makedirs(name=dir_path,exist_ok=True)
