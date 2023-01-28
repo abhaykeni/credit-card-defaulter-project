@@ -42,7 +42,9 @@ class ModelEvaluation:
             
             logging.info("Find latest location of transformer and model")
             transformer_path = self.model_resolver.get_latest_transformer_path()
+            logging.info(f"Latest Transformer Path: {transformer_path}")
             model_path = self.model_resolver.get_latest_model_path()
+            logging.info(f"Latest Model Path: {model_path}")
 
             logging.info("Importing previosly trained transformer and model")
             transformer = utils.load_object(file_path=transformer_path)
@@ -53,20 +55,21 @@ class ModelEvaluation:
             current_model = utils.load_object(file_path=self.model_trainer_artifact.model_path)
 
             test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
+            input_feature_df = test_df.drop(TARGET_COLUMN,axis=1)
             target_df = test_df[TARGET_COLUMN]
             y_true = target_df.to_numpy()
 
             logging.info("Prediction using previous model")
-            input_feature_names = list(transformer.feature_names_in_)
-            input_arr = transformer.transform(test_df[input_feature_names])
+            input_feature_name = list(transformer.feature_names_in_)
+            input_arr = transformer.transform(test_df[input_feature_name])
             y_pred = model.predict(input_arr)
             
             previous_model_score = f1_score(y_true=y_true, y_pred=y_pred)
-            logging.info(f"Accuracy using previous model score: {previous_model_score}")
+            logging.info(f"Accuracy using previous model score:{previous_model_score}")
 
             logging.info("Predication using current model")
-            input_feature_names = list(current_transformer.feature_names_in_)
-            input_arr = current_transformer.transform(test_df[input_feature_names])
+            input_feature_name = list(current_transformer.feature_names_in_)
+            input_arr = current_transformer.transform(test_df[input_feature_name])
             y_pred = current_model.predict(input_arr)
 
             current_model_score = f1_score(y_true=y_true, y_pred=y_pred)

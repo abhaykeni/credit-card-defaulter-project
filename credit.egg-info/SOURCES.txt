@@ -4,6 +4,7 @@ credit/__init__.py
 credit/config.py
 credit/exception.py
 credit/logger.py
+credit/predictor.py
 credit/utils.py
 credit.egg-info/PKG-INFO
 credit.egg-info/SOURCES.txt

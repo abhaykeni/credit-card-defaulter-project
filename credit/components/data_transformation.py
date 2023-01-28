@@ -8,6 +8,7 @@ from sklearn.preprocessing import RobustScaler,StandardScaler
 from imblearn.combine import SMOTETomek
 from credit.config import TARGET_COLUMN
 from credit import utils
+from sklearn.pipeline import Pipeline
 
 
 

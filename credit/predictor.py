@@ -31,7 +31,7 @@ class ModelResolver:
             latest_dir_path = self.get_latest_dir_path()
             if latest_dir_path == None:
                 raise Exception("Transformer is not available")
-            return os.path.join(latest_dir_path,self.transformer_dir_name)
+            return os.path.join(latest_dir_path,self.transformer_dir_name,TRANSFORMER_FILE_NAME)
             
         except Exception as e:
             raise CreditException(e,sys)
@@ -41,6 +41,32 @@ class ModelResolver:
             latest_dir_path = self.get_latest_dir_path()
             if latest_dir_path == None:
                 raise Exception("Model is not available")
-            return os.path.join(latest_dir_path,self.model_dir_name)
+            return os.path.join(latest_dir_path,self.model_dir_name,MODEL_FILE_NAME)
+        except Exception as e:
+            raise CreditException(e,sys)
+
+    
+    def get_latest_save_dir_path(self)->str:
+        try:
+            latest_dir_path = self.get_latest_dir_path()
+            if latest_dir_path == None:
+                return os.path.join(self.model_registry,f"{0}")
+            latest_dir_num = int(os.path.basename(latest_dir_path))    
+            return os.path.join(self.model_registry,f"{latest_dir_num+1}")
+        except Exception as e:
+            raise CreditException(e,sys)
+    
+    
+    def get_latest_save_transformer_path(self)->str:
+        try:
+            latest_dir = self.get_latest_save_dir_path()
+            return os.path.join(latest_dir,self.transformer_dir_name,TRANSFORMER_FILE_NAME)
+        except Exception as e:
+            raise CreditException(e,sys)
+
+    def get_latest_save_model_path(self):
+        try:
+            latest_dir = self.get_latest_save_dir_path()
+            return os.path.join(latest_dir,self.model_dir_name,MODEL_FILE_NAME)
         except Exception as e:
             raise CreditException(e,sys)
