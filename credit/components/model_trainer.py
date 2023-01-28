@@ -3,9 +3,9 @@ from credit.exception import CreditException
 from credit.logger import logging
 import sys,os
 from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
 from credit import utils
-from sklearn.metrics import accuracy_score, classification_report,ConfusionMatrixDisplay, \
-                            precision_score, recall_score, f1_score, roc_auc_score,roc_curve,confusion_matrix
+from sklearn.metrics import f1_score
 
 
 
@@ -16,6 +16,12 @@ class ModelTrainer:
             logging.info(f"{'>>'*20} Model Trainer {'<<'*20}")
             self.model_trainer_config = model_trainer_config
             self.data_transformation_artifact = data_transformation_artifact
+        except Exception as e:
+            raise CreditException(e,sys)
+
+    def hyperparemeter_tunning():
+        try:
+            pass
         except Exception as e:
             raise CreditException(e,sys)
 

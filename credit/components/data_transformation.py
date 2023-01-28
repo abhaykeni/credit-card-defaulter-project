@@ -4,7 +4,7 @@ from credit.exception import CreditException
 import os,sys
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import RobustScaler,StandardScaler
 from imblearn.combine import SMOTETomek
 from credit.config import TARGET_COLUMN
 from credit import utils
@@ -47,7 +47,7 @@ class DataTransformation:
             target_feature_train_arr = target_feature_train_df.to_numpy()
             target_feature_test_arr = target_feature_test_df.to_numpy()
 
-            smt = SMOTETomek(random_state=42)
+            smt = SMOTETomek(random_state=42,sampling_strategy='minority',n_jobs=1)
 
             logging.info(f"Before Re-Sampling in Train Set: Input {input_feature_train_arr.shape} and Output: {target_feature_train_arr.shape}")
             input_feature_train_arr , target_feature_train_arr = smt.fit_resample(X=input_feature_train_arr, y=target_feature_train_arr)

@@ -19,21 +19,21 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
     except Exception as e:
         raise CreditException(e,sys)
 
-def save_numpy_array_data(file_path:str,array:np.array):
+def save_numpy_array_data(file_path: str, array: np.array):
     try:
-        dir_path = os.path.dirname(p=file_path)
-        os.makedirs(name=dir_path,exist_ok=True)
-        with open (file_path,"wb") as file_obj:
-            np.save(file_obj,array)
+        dir_path = os.path.dirname(file_path)
+        os.makedirs(dir_path, exist_ok=True)
+        with open(file_path, "wb") as file_obj:
+            np.save(file_obj, array)
     except Exception as e:
-        raise CreditException(e,sys)
+        raise SensorException(e, sys) from e
 
-def load_numpy_array_data(file_path:str):
+def load_numpy_array_data(file_path: str) -> np.array:
     try:
-        with open (file_path,"rb") as file_obj:
-            np.load(file_obj)
+        with open(file_path, "rb") as file_obj:
+            return np.load(file_obj)
     except Exception as e:
-        raise CreditException(e,sys)
+        raise SensorException(e, sys) from e
 
 
 def save_object(file_path:str,obj=object):

@@ -18,10 +18,15 @@ class DataTransformationArtifact:
 @dataclass
 class ModelTrainerArtifact:
     model_path:str
-    f1_test_score:float
+    f1_train_score:float
     f1_test_score:float
     
 @dataclass
-class ModelEvaluationArtifact:...
+class ModelEvaluationArtifact:
+    is_model_accepted:bool
+    improved_accuracy:float
+
 @dataclass
-class ModelPusherArtifact:...
+class ModelPusherArtifact:
+    pusher_model_dir:str
+    saved_model_dir:str
