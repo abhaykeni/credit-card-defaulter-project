@@ -4,7 +4,7 @@ from credit.exception import CreditException
 import sys,os
 from credit.config import TARGET_COLUMN
 from credit.predictor import ModelResolver
-from credit import utils
+from credit.utils import load_object
 import pandas as pd
 from sklearn.metrics import f1_score
 import numpy as np
@@ -40,49 +40,46 @@ class ModelEvaluation:
                 logging.info(f"Model Evaluation Artifact: {model_evaluation_artifact}")
                 return model_evaluation_artifact
             
-            logging.info("Find latest location of transformer and model")
+            logging.info("Finding location of transformer model and target encoder")
             transformer_path = self.model_resolver.get_latest_transformer_path()
-            logging.info(f"Latest Transformer Path: {transformer_path}")
             model_path = self.model_resolver.get_latest_model_path()
-            logging.info(f"Latest Model Path: {model_path}")
 
-            logging.info("Importing previosly trained transformer and model")
-            transformer = utils.load_object(file_path=transformer_path)
-            model = utils.load_object(file_path=model_path)
+            logging.info("Previous trained objects of transformer, model and target encoder")
+            #Previous trained  objects
+            transformer = load_object(file_path=transformer_path)
+            model = load_object(file_path=model_path)
 
-            logging.info("Importing currently trained transformer and model")
-            current_transformer = utils.load_object(file_path=self.data_transformation_artifact.transform_object_path)
-            current_model = utils.load_object(file_path=self.model_trainer_artifact.model_path)
+            logging.info("Currently trained model objects")
+            #Currently trained model objects
+            current_transformer = load_object(file_path=self.data_transformation_artifact.transform_object_path)
+            current_model = load_object(file_path=self.model_trainer_artifact.model_path)
 
             test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
-            input_feature_df = test_df.drop(TARGET_COLUMN,axis=1)
             target_df = test_df[TARGET_COLUMN]
             y_true = target_df.to_numpy()
+            # accuracy using previous trained model
 
-            logging.info("Prediction using previous model")
             input_feature_name = list(transformer.feature_names_in_)
             input_arr = transformer.transform(test_df[input_feature_name])
             y_pred = model.predict(input_arr)
-            
-            previous_model_score = f1_score(y_true=y_true, y_pred=y_pred)
-            logging.info(f"Accuracy using previous model score:{previous_model_score}")
+            previous_model_score = f1_score(y_true=y_true,y_pred=y_pred)
+            logging.info(f"Accuracy using previous trained model: {previous_model_score}")
 
-            logging.info("Predication using current model")
             input_feature_name = list(current_transformer.feature_names_in_)
             input_arr = current_transformer.transform(test_df[input_feature_name])
             y_pred = current_model.predict(input_arr)
-
-            current_model_score = f1_score(y_true=y_true, y_pred=y_pred)
-            logging.info(f"Accuracy using current model score: {current_model_score}")
+            y_true = target_df.to_numpy()
+            current_model_score = f1_score(y_true=y_true,y_pred=y_pred)
+            logging.info(f"Accuracy using current trained model: {current_model_score}")
 
             if current_model_score<=previous_model_score:
-                logging.info("Current Trained Model is not better than Previous Trained Model")
-                raise Exception("Current Trained Model is not better than Previous Trained Model")
+                logging.info(f"Current trained model is not better than previous model")
+                raise Exception("Current Trained Model is not better than previously trained model")
 
-            model_evaluation_artifact = artifact_entity.ModelEvaluationArtifact(is_model_accepted=True, 
+            model_eval_artifact = artifact_entity.ModelEvaluationArtifact(is_model_accepted=True, 
             improved_accuracy=current_model_score-previous_model_score)
-            logging.info(f"Model Evaluation Artifact: {model_evaluation_artifact}")
-            return model_evaluation_artifact
+            logging.info(f"Model eval artifact: {model_eval_artifact}")
+            return model_eval_artifact
             
         except Exception as e:
             raise CreditException(e,sys)

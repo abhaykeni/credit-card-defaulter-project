@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os,sys
 import dill
+import yaml
 from credit.logger import logging
 from credit.exception import CreditException
 from credit.config import mongo_client
@@ -55,6 +56,16 @@ def load_object(file_path: str, ) -> object:
             return dill.load(file_obj)
     except Exception as e:
         raise CreditException(e, sys) from e
+
+
+def write_yaml_file(file_path:str,data:dict):
+    try:
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir,exist_ok=True)
+        with open(file_path,'w') as file_writer:
+            yaml.dump(data,file_writer)
+    except Exception as e:
+        raise CreditException(e,sys)
 
 
 

@@ -22,4 +22,5 @@ credit/entity/__init__.py
 credit/entity/artifact_entity.py
 credit/entity/config_entity.py
 credit/pipeline/__init__.py
+credit/pipeline/batch_prediction_pipeline.py
 credit/pipeline/training_pipeline.py

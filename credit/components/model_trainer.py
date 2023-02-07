@@ -27,7 +27,7 @@ class ModelTrainer:
 
     def train_model(self,X,y):
         try:
-            model = RandomForestClassifier()
+            model = XGBClassifier()
             model.fit(X,y)
             return model
         except Exception as e:
