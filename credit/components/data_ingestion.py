@@ -25,6 +25,12 @@ class DataIngestion:
 
             logging.info("Replace na values with NAN")
             df.replace(to_replace="na",value=np.NAN,inplace=True)
+            logging.info("Dropping ID Collumn")
+            df = df.drop(["ID"],axis=1)
+            logging.info("Preprocessing unknown and irrelevant data")
+            
+            df["EDUCATION"] = df["EDUCATION"].map({0:0,1:1,2:2,3:3,4:4,5:4,6:4})
+            df["MARRIAGE"] = df["MARRIAGE"].map({0:3,1:1,2:2,3:3})
 
             logging.info("Make dir for storing feature data")
             feature_store_dir = os.path.dirname(p=self.data_ingestion_config.feature_store_file_path)

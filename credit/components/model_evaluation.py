@@ -6,7 +6,7 @@ from credit.config import TARGET_COLUMN
 from credit.predictor import ModelResolver
 from credit.utils import load_object
 import pandas as pd
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, accuracy_score
 import numpy as np
 
 
@@ -62,14 +62,14 @@ class ModelEvaluation:
             input_feature_name = list(transformer.feature_names_in_)
             input_arr = transformer.transform(test_df[input_feature_name])
             y_pred = model.predict(input_arr)
-            previous_model_score = f1_score(y_true=y_true,y_pred=y_pred)
+            previous_model_score = accuracy_score(y_true=y_true,y_pred=y_pred)
             logging.info(f"Accuracy using previous trained model: {previous_model_score}")
 
             input_feature_name = list(current_transformer.feature_names_in_)
             input_arr = current_transformer.transform(test_df[input_feature_name])
             y_pred = current_model.predict(input_arr)
             y_true = target_df.to_numpy()
-            current_model_score = f1_score(y_true=y_true,y_pred=y_pred)
+            current_model_score = accuracy_score(y_true=y_true,y_pred=y_pred)
             logging.info(f"Accuracy using current trained model: {current_model_score}")
 
             if current_model_score<=previous_model_score:

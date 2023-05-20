@@ -37,7 +37,7 @@ class DataTransformation:
             target_feature_test_df = test_df[TARGET_COLUMN]
 
             logging.info("Running Robustscaler on Input Train Features")
-            transformation_pipeline = RobustScaler()
+            transformation_pipeline = StandardScaler()
             transformation_pipeline.fit(X=input_feature_train_df)
 
             logging.info("Transforming Input Train and Test Features")

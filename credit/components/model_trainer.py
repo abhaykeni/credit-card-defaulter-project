@@ -5,7 +5,7 @@ import sys,os
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from credit import utils
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, accuracy_score
 
 
 
