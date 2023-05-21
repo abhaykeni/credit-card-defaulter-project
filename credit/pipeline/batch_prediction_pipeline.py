@@ -36,6 +36,6 @@ def start_bath_prediction_pipeline(input_file_path):
         prediction_file_path = os.path.join(PREDICTION_DIR,prediction_file_name)
 
         input_df.to_csv(prediction_file_path,index=False,header=True)
-        return         
+        return prediction_file_path         
     except Exception as e:
         raise CreditException(e,sys)

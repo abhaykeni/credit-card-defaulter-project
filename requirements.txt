@@ -21,4 +21,5 @@ apache-airflow
 seaborn
 matplotlib
 statistics
+flask
 -e .

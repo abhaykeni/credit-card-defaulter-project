@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+    <title>Uploading & Reading CSV file</title> 
+</head> 
+<body> 
+    <form method = "POST" enctype="multipart/form-data" action = "/">   
+        <input type="file" name="file" accept=".csv">
+        <input type = "submit" value="Upload"> 
+    </form>
+    <p style="color:green;"> File uploaded successfully!! </p>
+    <br></br>
+    <form method = "POST" enctype="multipart/form-data" action = "/train">   
+        <input type = "submit" value="train" name="train"> 
+    </form>
+    <br></br>
+    <form method = "POST" enctype="multipart/form-data" action = "/predict">   
+        <input type = "submit" value="predict" name="predict">
+    </form>
+    <br></br>
+    <p style="color:blue;"> Choose whether to Train or Predict? </p>
+</body> 
+</html>

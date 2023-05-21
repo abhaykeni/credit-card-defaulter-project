@@ -4,7 +4,7 @@ from distutils.log import debug
 from fileinput import filename
 from werkzeug.utils import secure_filename
 import pandas as pd
-from flask import *
+from flask import Flask, request, jsonify
 import data_dump
 import os 
 
