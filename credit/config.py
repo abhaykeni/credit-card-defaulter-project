@@ -13,3 +13,6 @@ env_var = EnvironmentVariables()
 mongo_client = pymongo.MongoClient(env_var.mongo_db_url)
 
 TARGET_COLUMN = "default.payment.next.month"
+UPLOAD_FOLDER = os.path.join(os.getcwd(),'staticfiles', 'uploads') 
+ALLOWED_EXTENSIONS = {'csv'}
+ 

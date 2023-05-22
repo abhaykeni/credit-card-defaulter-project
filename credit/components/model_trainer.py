@@ -48,11 +48,11 @@ class ModelTrainer:
 
             logging.info('Calculating f1_score for training dataset')
             yhat_train = model.predict(X_train)
-            f1_train_score = f1_score(y_true=y_train,y_pred=yhat_train)
+            f1_train_score = accuracy_score(y_true=y_train,y_pred=yhat_train)
 
             logging.info('Calculating f1_score for testing dataset')
             yhat_test = model.predict(X_test)
-            f1_test_score = f1_score(y_true=y_test,y_pred=yhat_test)
+            f1_test_score = accuracy_score(y_true=y_test,y_pred=yhat_test)
 
             logging.info(f"Train score: {f1_train_score} and Test score: {f1_test_score}")
 
